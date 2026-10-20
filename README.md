@@ -1,27 +1,65 @@
-# Algo-Forge
+# ⚒️ AlgoForge
 
-Interactive Algorithm & Data Structure Visualization Platform
+### Interactive Algorithm & Data Structure Visualization Platform
 
-Algorithm Lab is an interactive learning platform designed to make algorithms and data structures easier to understand through visualization, experimentation, and performance analysis.
+**Understand algorithms by watching them work.**
 
-The platform combines a C++ algorithm engine with a modern web interface to let users learn concepts, run algorithms, observe their execution step-by-step, and analyze their performance.
+AlgoForge is a C++-powered educational platform designed to help students understand algorithms and data structures through interactive, step-by-step visualizations. Users can observe how algorithms process data, compare elements, swap values, and reach their final results.
 
----
+The project combines a C++ algorithm engine with a lightweight HTTP API and a web-based visualization interface built using HTML, CSS, and JavaScript.
 
-✨ Features
-
-- 📚 Learn Algorithms — Concept explanations and learning resources
-- 🎬 Video Learning — Watch algorithm explanations directly on the platform
-- 🧪 Interactive Visualization — Visualize algorithms step-by-step
-- ⚡ C++ Algorithm Engine — Algorithms and data structures implemented in C++
-- 📊 Performance Analysis — Compare execution time, comparisons, swaps, etc.
-- 🎯 Custom Input — Test algorithms with your own data
-- 🔍 Algorithm Comparison — Compare different algorithms on the same input
-- 🌐 Interactive Web Interface — Simple and responsive UI
+> **Project status:** Core Roadmap Completed ✅ — Enhancements Ongoing
 
 ---
 
-🧠 Algorithms
+## 🎯 Project Objectives
+
+- Visualize algorithms step by step to make complex concepts easier to understand.
+- Implement algorithms and data structures in C++.
+- Record algorithm operations, including comparisons, swaps, and state changes.
+- Connect the C++ engine to a browser-based frontend through a JSON API.
+- Help students explore algorithm behavior, time complexity, and performance.
+- Maintain a modular, extensible architecture for future improvements.
+
+## 👥 Project Collaborators
+
+- **Radheshyam Chaudhary**
+- **Rahul Kumar Saw**
+
+## ✨ Features
+
+### 1. Interactive Algorithm Visualization
+
+- Visual representation of array operations.
+- Step-by-step execution.
+- Play, pause, next-step, and reset controls.
+- Adjustable animation speed.
+- Highlighting of elements being compared or swapped.
+
+### 2. C++ Algorithm Engine
+
+- C++ implementations of algorithms and data structures.
+- Modular architecture for adding new algorithms.
+- A custom `StepRecorder` for capturing execution events.
+- Execution statistics, including comparisons and swaps.
+
+### 3. Algorithm Learning
+
+- Algorithm explanations and complexity information.
+- Best-case, average-case, and worst-case time complexity where applicable.
+- Space complexity information.
+- Opportunities to compare different algorithms.
+
+### 4. Web-Based Interface
+
+- Browser-based algorithm visualizations.
+- Array input and example datasets.
+- Execution controls and statistics.
+- Responsive interface for different screen sizes.
+
+*Keep this feature list synchronized with the functionality verified in the current codebase.*
+
+## 🧠 Algorithms
 
 Sorting
 
@@ -41,154 +79,113 @@ Graph Algorithms
 - Breadth First Search (BFS)
 - Depth First Search (DFS)
 - Dijkstra's Algorithm
+  
+## 🏗️ System Architecture
 
-Data Structures
+```text
+                  AlgoForge
+                      |
+          +-----------+-----------+
+          |                       |
+     C++ Backend              Frontend
+          |                       |
+   Algorithm Engine         HTML / CSS / JS
+          |
+     StepRecorder
+          |
+   Execution Statistics
+          |
+      C++ HTTP API
+          |
+       JSON Data
+          |
+          +------> Visualization UI
+```
 
-- Stack
-- Queue
-- Binary Search Tree
+### How it works
 
----
+1. **User input:** The user selects an algorithm and provides an array.
+2. **C++ execution:** The algorithm engine processes the input.
+3. **Step recording:** `StepRecorder` captures important operations and relevant states.
+4. **API communication:** The backend exchanges execution data with the frontend through JSON.
+5. **Visualization:** JavaScript animates the recorded steps in the browser.
+6. **Analysis:** The interface presents execution statistics and complexity information.
 
-🏗️ Project Architecture
+The algorithm logic resides in C++, while JavaScript handles visualization and browser interaction.
 
-                     Algo-Forge
-                         │
-            ┌────────────┴────────────┐
-            │                         │
-       Web Interface              C++ Engine
-      HTML/CSS/JavaScript       Algorithms & DS
-            │                         │
-            └────────────┬────────────┘
-                         │
-                  Execution Data
-                         │
-                         ▼
-                 Visual Representation
+## 🛠️ Technology Stack
 
-The C++ engine performs the actual algorithmic computation, while the frontend handles interaction and visualization.
+| Technology | Purpose |
+|---|---|
+| C++ | Algorithm engine, data structures, and execution tracking |
+| C++ HTTP library | Backend API and HTTP communication |
+| JSON | Data exchange between backend and frontend |
+| HTML5 | Web page structure |
+| CSS3 | Styling and responsive layouts |
+| JavaScript | Visualization, animations, and user interactions |
+| Git & GitHub | Version control and collaboration |
+| CMake | C++ build configuration |
 
----
+## 📂 Project Structure
 
-🛠️ Technology Stack
-
-Technology| Purpose
-C++| Algorithms, data structures & core logic
-HTML| Web structure
-CSS| UI & styling
-JavaScript| Interaction & visualization
-Git/GitHub| Version control
-
----
-
-📂 Project Structure
-
-Algorithm-Lab/
-│
+```text
+AlgoForge/
 ├── backend/
 │   ├── algorithms/
-│   ├── datastructures/
+│   │   ├── bubble_sort.cpp
+│   │   └── quick_sort.cpp
 │   ├── core/
+│   │   ├── step.h
+│   │   └── step_recorder.h
+│   ├── api/
+│   ├── datastructures/
 │   └── main.cpp
-│
 ├── frontend/
 │   ├── index.html
 │   ├── style.css
 │   └── app.js
-│
-├── data/
-│
-├── README.md
-└── .gitignore
+├── tests/
+├── CMakeLists.txt
+├── .gitignore
+└── README.md
+```
 
----
+*This structure illustrates the intended organization; adjust it to match the actual repository.*
 
-⚙️ How It Works
+## 🗺️ Six-Week Development Roadmap
 
-User Input
-    ↓
-JavaScript Interface
-    ↓
-C++ Algorithm Engine
-    ↓
-Algorithm Execution
-    ↓
-Execution Steps & Metrics
-    ↓
-Visualization
+- [x] **Week 1 — C++ Core:** Algorithm engine, Bubble Sort, Quick Sort, and `StepRecorder`.
+- [x] **Week 2 — Backend API:** C++ HTTP server and JSON request/response handling.
+- [x] **Week 3 — Frontend:** Web interface and backend integration.
+- [x] **Week 4 — Visualization:** Step playback, animations, speed controls, and execution statistics.
+- [x] **Week 5 — Expansion:** Additional algorithms, explanations, and edge-case testing.
+- [x] **Week 6 — Finalization:** Bug fixes, UI refinement, documentation, and project demonstration.
 
-For example, when a user selects Quick Sort, the C++ engine performs the sorting operation and generates execution information. The frontend uses this information to visualize comparisons, swaps, partitions, and the final result.
+## 🚀 Getting Started
 
----
+Use the following prerequisites to build and run the project:
 
-📊 Performance Analysis
+- A compatible C++ compiler.
+- CMake.
+- Git.
+- A modern web browser.
+- The C++ HTTP and JSON libraries selected by the project.
 
-Algorithm Lab can provide metrics such as:
+Add the verified installation, build, and run commands for your repository here so other developers can reproduce the setup.
 
-Algorithm: Quick Sort
+## 🔮 Future Improvements
 
-Input Size:       10,000
-Execution Time:   0.XX ms
-Comparisons:      XXXX
-Swaps:            XXXX
+- Additional sorting algorithms, including Heap Sort and Merge Sort.
+- Searching algorithms and tree visualizations.
+- Stack, queue, linked-list, and graph visualizations.
+- Side-by-side algorithm comparisons.
+- Code explanations synchronized with execution steps.
+- Curated learning resources and tutorial links.
 
-Average Complexity: O(n log n)
+## 🎓 Why AlgoForge?
 
-This allows users to understand not only how an algorithm works, but also how efficiently it works.
+Many learners memorize algorithm code without fully understanding how it works. AlgoForge aims to bridge that gap by connecting **actual C++ execution with visual, step-by-step learning**.
 
----
+It also demonstrates how a compiled backend, HTTP API, JSON communication, and browser-based interface can work together in one application.
 
-🎯 Objective
-
-The primary objective of Algorithm Lab is to bridge the gap between theoretical algorithm concepts and practical understanding by allowing users to see algorithms in action.
-
-It also demonstrates practical applications of C++ OOP, STL, algorithms, data structures, and performance analysis.
-
----
-
-🔮 Future Scope
-
-- 🤖 AI-powered algorithm explanations
-- 🧩 Interactive coding challenges
-- 🏆 Leaderboard and user progress
-- 📈 Advanced performance analytics
-- 🗺️ More graph algorithms
-- 🌳 More data structure visualizations
-- 👨‍💻 C++ code execution and evaluation
-- 👥 Multiplayer algorithm challenges
-
----
-
-👨‍💻 Learning Outcomes
-
-Through this project, we explore:
-
-- Object-Oriented Programming in C++
-- Data Structures & Algorithms
-- STL
-- Algorithm complexity
-- Performance measurement
-- Frontend development
-- C++ and web integration
-- Software architecture
-- Git & GitHub
-
----
-
-📌 Project Status
-
-🚧 Under Development
-
-This project is being developed as a C++ showcase and interactive learning platform.
-
----
-
-⭐ Support
-
-If you find this project useful, consider giving it a ⭐ on GitHub!
-
----
-
-💡 Built to Visualize. Built to Understand. Built with C++.
-
-Algorithm Lab — See the Algorithm, Not Just the Code.
+**AlgoForge — See the logic. Follow every step. Understand the algorithm.**
