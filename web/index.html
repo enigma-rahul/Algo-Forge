@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algo Forge — Interactive C++ Algorithm Visualizer</title>
+  <meta name="description" content="Explore real C++ algorithms with step-by-step playback, live execution traces, and interactive visualizers for sorting, searching, graphs, and trees.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <header class="app-header">
+    <div class="header-brand">
+      <div class="brand-logo">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+          <polyline points="2 17 12 22 22 17"></polyline>
+          <polyline points="2 12 12 17 22 12"></polyline>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1 class="brand-title">ALGO FORGE</h1>
+        <span class="brand-tag">C++17 Engine</span>
+      </div>
+    </div>
+
+    <!-- Algorithm Category Selector Tabs -->
+    <nav class="category-nav" aria-label="Algorithm Categories">
+      <button class="nav-tab active" data-category="sorting">
+        <span class="tab-icon">📊</span> Sorting
+      </button>
+      <button class="nav-tab" data-category="searching">
+        <span class="tab-icon">🔍</span> Searching
+      </button>
+      <button class="nav-tab" data-category="graph">
+        <span class="tab-icon">🕸️</span> Graph
+      </button>
+      <button class="nav-tab" data-category="tree">
+        <span class="tab-icon">🌳</span> Tree (BST)
+      </button>
+    </nav>
+
+    <!-- Header Right Controls: Status & Theme Toggle -->
+    <div class="header-actions">
+      <div class="status-indicator" id="engineStatusIndicator">
+        <span class="status-dot"></span>
+        <span class="status-label" id="engineStatusLabel">Checking C++ Engine...</span>
+      </div>
+      <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle light and dark mode" title="Toggle light/dark mode">
+        <!-- Sun icon (shown in dark mode) -->
+        <svg id="themeSunIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <!-- Moon icon (shown in light mode) -->
+        <svg id="themeMoonIcon" class="hidden" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Application Workspace -->
+  <main class="app-container">
+    <!-- Left Sidebar: Catalog & Input Controls -->
+    <aside class="control-panel">
+      <!-- Algorithm Selection Card -->
+      <section class="panel-card">
+        <div class="card-header">
+          <label for="algorithmSelect" class="card-title">Select Algorithm</label>
+        </div>
+        <select id="algorithmSelect" class="styled-select" aria-label="Select Algorithm">
+          <!-- Populated dynamically via JS -->
+        </select>
+        
+        <!-- Algorithm Info Card -->
+        <div class="algo-info" id="algoInfoBox">
+          <p class="algo-description" id="algoDescription">
+            Loading algorithm description...
+          </p>
+          <div class="complexity-badges">
+            <div class="badge-item">
+              <span class="badge-label">Time</span>
+              <span class="badge-value" id="timeComplexity">O(n²)</span>
+            </div>
+            <div class="badge-item">
+              <span class="badge-label">Space</span>
+              <span class="badge-value" id="spaceComplexity">O(1)</span>
+            </div>
+            <div class="badge-item">
+              <span class="badge-label">Family</span>
+              <span class="badge-value" id="familyType">Array</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Input Configuration Card -->
+      <section class="panel-card">
+        <div class="card-header">
+          <h2 class="card-title">Algorithm Input</h2>
+          <div class="preset-group" id="presetButtons">
+            <!-- Preset buttons injected by JS -->
+          </div>
+        </div>
+
+        <div id="inputFormContainer">
+          <!-- Dynamic Input Controls (Array, Target, Graph, or Tree) -->
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button id="runBtn" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span>Run C++ Engine</span>
+          </button>
+          <button id="resetInputBtn" class="btn btn-secondary" title="Reset to default input">
+            Reset
+          </button>
+        </div>
+
+        <!-- Feedback / Error Banner -->
+        <div id="errorBanner" class="error-banner hidden" role="alert">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <div class="error-content">
+            <strong class="error-title" id="errorTitle">Validation Error</strong>
+            <span class="error-msg" id="errorMessage">Invalid input provided.</span>
+          </div>
+        </div>
+      </section>
+    </aside>
+
+    <!-- Main Right Area: Visualizer Stage & Playback Bar -->
+    <section class="visualization-stage">
+      <!-- Visualizer Canvas / Container Card -->
+      <div class="stage-card">
+        <!-- Stage Top Bar: Algorithm title + Active stats -->
+        <div class="stage-top-bar">
+          <div class="stage-algo-meta">
+            <h2 class="active-algo-name" id="stageAlgoName">Bubble Sort</h2>
+            <span class="stage-status-badge" id="executionStateBadge">Ready</span>
+          </div>
+          <div class="stage-stats">
+            <div class="stat-pill">
+              <span class="stat-lbl">Steps:</span>
+              <span class="stat-val" id="statTotalSteps">0</span>
+            </div>
+            <div class="stat-pill" id="statComparisonsPill">
+              <span class="stat-lbl">Comparisons:</span>
+              <span class="stat-val" id="statComparisons">0</span>
+            </div>
+            <div class="stat-pill" id="statSwapsPill">
+              <span class="stat-lbl">Swaps:</span>
+              <span class="stat-val" id="statSwaps">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Visualization Viewports -->
+        <div class="viewport-wrapper">
+          <!-- 1. Array Bar Viewport -->
+          <div id="arrayViewport" class="viewport active">
+            <div class="array-bars-container" id="arrayBarsContainer">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- 2. Graph Viewport -->
+          <div id="graphViewport" class="viewport">
+            <svg id="graphSvg" class="graph-svg" viewBox="0 0 800 480">
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="24" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b"></path>
+                </marker>
+                <marker id="arrow-active" viewBox="0 0 10 10" refX="24" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"></path>
+                </marker>
+                <marker id="arrow-path" viewBox="0 0 10 10" refX="24" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981"></path>
+                </marker>
+              </defs>
+              <g id="graphEdgesGroup"></g>
+              <g id="graphNodesGroup"></g>
+            </svg>
+            <!-- Graph Aux Info (Queue/Stack & Distance Table) -->
+            <div class="graph-aux-panel" id="graphAuxPanel">
+              <div class="aux-block">
+                <span class="aux-title" id="auxQueueTitle">Frontier / Queue:</span>
+                <div class="aux-items" id="auxQueueItems">Empty</div>
+              </div>
+              <div class="aux-block" id="auxDistanceBlock">
+                <span class="aux-title">Shortest Distances:</span>
+                <div class="aux-items" id="auxDistanceItems">None</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Grid / A* Viewport -->
+          <div id="gridViewport" class="viewport">
+            <div class="grid-container" id="gridContainer">
+              <!-- Rendered dynamically for A* -->
+            </div>
+            <div class="grid-legend-panel">
+              <span class="grid-legend-item"><span class="legend-swatch grid-start"></span> Start</span>
+              <span class="grid-legend-item"><span class="legend-swatch grid-target"></span> Target</span>
+              <span class="grid-legend-item"><span class="legend-swatch grid-wall"></span> Wall</span>
+              <span class="grid-legend-item"><span class="legend-swatch grid-open"></span> Open Set</span>
+              <span class="grid-legend-item"><span class="legend-swatch grid-closed"></span> Closed Set</span>
+              <span class="grid-legend-item"><span class="legend-swatch grid-path"></span> Final Path</span>
+            </div>
+          </div>
+
+          <!-- 4. Tree (BST) Viewport -->
+          <div id="treeViewport" class="viewport">
+            <svg id="treeSvg" class="tree-svg" viewBox="0 0 800 480">
+              <g id="treeLinksGroup"></g>
+              <g id="treeNodesGroup"></g>
+            </svg>
+            <div class="tree-aux-panel">
+              <span class="aux-title">BST Traversal Path:</span>
+              <div class="aux-items" id="treePathItems">None</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Step Explanation Banner -->
+        <div class="event-banner" id="eventBanner">
+          <div class="event-badge" id="eventTypeBadge">INFO</div>
+          <div class="event-message-text" id="eventMessageText">
+            Select an algorithm and click "Run C++ Engine" to record steps.
+          </div>
+        </div>
+
+        <!-- Visual State Legend -->
+        <div class="stage-legend" id="stageLegend">
+          <!-- Dynamic legend items based on algorithm type -->
+        </div>
+      </div>
+
+      <!-- Playback Controls Bar -->
+      <footer class="playback-bar">
+        <!-- Left: Restart & Step Buttons -->
+        <div class="playback-buttons">
+          <button id="btnRestart" class="control-btn" title="Restart to beginning (Home)">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 4v6h6"></path>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+          </button>
+          <button id="btnPrev" class="control-btn" title="Previous step (Left Arrow)">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="19 20 9 12 19 4 19 20"></polygon>
+              <line x1="5" y1="19" x2="5" y2="5"></line>
+            </svg>
+          </button>
+          <button id="btnPlayPause" class="control-btn play-btn" title="Play / Pause (Spacebar)">
+            <svg id="playIcon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <svg id="pauseIcon" class="hidden" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <rect x="6" y="4" width="4" height="16"></rect>
+              <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+          </button>
+          <button id="btnNext" class="control-btn" title="Next step (Right Arrow)">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 4 15 12 5 20 5 4"></polygon>
+              <line x1="19" y1="5" x2="19" y2="19"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Center: Step Slider & Step Counter -->
+        <div class="playback-progress">
+          <span class="step-indicator" id="stepCounterText">Step 0 / 0</span>
+          <input type="range" id="stepScrubber" class="styled-slider" min="0" max="0" value="0" aria-label="Step progress scrubber">
+        </div>
+
+        <!-- Right: Speed Controller -->
+        <div class="playback-speed">
+          <label for="speedSlider" class="speed-label">Speed:</label>
+          <input type="range" id="speedSlider" class="styled-slider speed-slider" min="1" max="10" value="5" aria-label="Playback speed slider">
+          <span class="speed-value" id="speedValueLabel">1x</span>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
